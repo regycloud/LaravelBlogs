@@ -18,7 +18,7 @@ const Login = () => {
     return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
             <form onSubmit={handleSubmit} style={{ width: '300px' }}>
-                <h2>Login</h2>
+                <h2>ログインページ</h2>
                 {errors && (
                     <div style={{ color: 'red' }}>
                         {Object.values(errors).map((err, idx) => (
@@ -27,7 +27,7 @@ const Login = () => {
                     </div>
                 )}
                 <div>
-                    <label>Email:</label>
+                    <label>メールアドレス:</label>
                     <input
                         type="email"
                         value={email}
@@ -37,7 +37,7 @@ const Login = () => {
                     />
                 </div>
                 <div>
-                    <label>Password:</label>
+                    <label>パスワード:</label>
                     <input
                         type="password"
                         value={password}
@@ -47,7 +47,7 @@ const Login = () => {
                     />
                 </div>
                 <button type="submit" style={{ padding: '10px', width: '100%' }}>
-                    Login
+                    ログイン
                 </button>
             </form>
         </div>

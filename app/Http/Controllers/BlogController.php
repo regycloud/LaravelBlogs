@@ -83,8 +83,9 @@ class BlogController extends Controller
         if (Auth::id() !== $blog->user_id) {
             abort(403, 'Unauthorized action.');
         }
-
+    
         $blog->delete();
-        return redirect()->route('blogs.index')->with('success', 'Post berhasil dihapus.');
+    
+        return response()->json(['message' => 'Post berhasil dihapus.'], 200);
     }
 }

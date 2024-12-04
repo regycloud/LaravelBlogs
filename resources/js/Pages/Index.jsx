@@ -1,4 +1,22 @@
 import React from 'react';
+import axios from 'axios';
+
+const handleDelete = async (id) => {
+    if (confirm('Apakah Anda yakin ingin menghapus blog ini?')) {
+        try {
+            await axios.delete(`/blogs/${id}`, {
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                },
+            });
+            alert('Blog berhasil dihapus.');
+            window.location.reload(); // Opsional: refresh halaman
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Gagal menghapus blog.');
+        }
+    }
+};
 
 const Index = ({ blogs, auth }) => {
 
@@ -25,17 +43,17 @@ const Index = ({ blogs, auth }) => {
 
     return (
         <div>
-            <h1>Daftar Blog</h1>
+            <h1>ブログリスト</h1>
             {/* Tampilkan tombol "Buat Blog Baru" jika user login */}
             {auth?.user && (
                 <a href="/blogs/create" style={{ color: 'green', marginBottom: '10px', display: 'inline-block' }}>
-                    Buat Blog Baru
+                    新しいブログを書く
                 </a>
             )}
 
             {/* Jika tidak ada blog */}
             {blogs.length === 0 ? (
-                <p>Tidak ada blog yang tersedia saat ini.</p>
+                <p>ブログはありません。</p>
             ) : (
                 <ul>
                     {blogs.map((blog) => (
@@ -52,9 +70,15 @@ const Index = ({ blogs, auth }) => {
                                         action={`/blogs/${blog.id}`}
                                         style={{ display: 'inline', marginLeft: '10px' }}
                                     >
+                                        <button
+                                        onClick={() => handleDelete(blog.id)}
+                                        style={{ color: 'red', border: 'none', background: 'none', cursor: 'pointer' }}
+                                    >
+                                        Hapus
+                                    </button>
                                         <input type="hidden" name="_method" value="DELETE" />
                                         <button type="submit" style={{ color: 'red', border: 'none', background: 'none', cursor: 'pointer' }}>
-                                            Hapus
+                                            消す
                                         </button>
                                     </form>
                                 </>

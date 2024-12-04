@@ -9,7 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 
 
-
+Route::get('/blogs/{blog}', function (App\Models\Blog $blog) {
+    return Inertia::render('Show', [
+        'blog' => $blog, // Kirim data blog ke React
+    ]);
+})->name('blogs.show');
 Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index'); // Halaman daftar blog
 Route::post('/logout', function () {
     Auth::logout();
@@ -19,10 +23,19 @@ Route::post('/logout', function () {
 
 Route::middleware([HandleInertiaRequests::class, 'auth'])->group(function () {
     Route::get('/blogs/create', [BlogController::class, 'create'])->name('blogs.create'); // Halaman buat blog
+    Route::delete('/blogs/{blog}', [BlogController::class, 'destroy'])->name('blogs.destroy');
 
     Route::get('/blogs/create', function () {
     return Inertia::render('Create'); // Menunjuk ke file Create.jsx
     })->name('blogs.create');
+
+
+    Route::get('/blogs/{blog}/edit', function (App\Models\Blog $blog) {
+    return Inertia::render('Edit', [
+        'blog' => $blog, // Kirim data blog ke React
+    ]);})->name('blogs.edit');
+
+    Route::put('/blogs/{blog}', [BlogController::class, 'update'])->name('blogs.update');
 
     // debug
     Route::get('/blogs/create-debug', function () {
@@ -54,9 +67,9 @@ Route::middleware([
 
 Route::middleware(['auth'])->group(function () {
     // Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
-    Route::post('/blogs', [BlogController::class, 'store'])->name('blogs.store');
+    // Route::post('/blogs', [BlogController::class, 'store'])->name('blogs.store');
     // Route::get('/blogs/{blog}', [BlogController::class, 'show'])->name('blogs.show');
-    Route::get('/blogs/{blog}/edit', [BlogController::class, 'edit'])->name('blogs.edit');
+    // Route::get('/blogs/{blog}/edit', [BlogController::class, 'edit'])->name('blogs.edit');
     Route::put('/blogs/{blog}', [BlogController::class, 'update'])->name('blogs.update');
-    Route::delete('/blogs/{blog}', [BlogController::class, 'destroy'])->name('blogs.destroy');
+    // Route::delete('/blogs/{blog}', [BlogController::class, 'destroy'])->name('blogs.destroy');
 });
