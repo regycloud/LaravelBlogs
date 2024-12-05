@@ -6,6 +6,25 @@ use Inertia\Inertia;
 use App\Http\Controllers\BlogController;
 use App\Http\Middleware\HandleInertiaRequests;
 use Illuminate\Support\Facades\Auth;
+use App\Actions\Fortify\CreateNewUser;
+use App\Http\Controllers\RegisteredUserController;
+
+Route::post('/register', function (Request $request) {
+    $action = new CreateNewUser();
+    $user = $action->create($request->all());
+    return response()->json(['message' => 'Registration successful!', 'user' => $user]);
+});
+
+Route::middleware('web')->group(function () {
+    Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
+});
+
+
+Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
+
+Route::get('/register', function () {
+    return Inertia::render('Register'); 
+});
 
 // Logout request
 Route::post('/logout', function () {
