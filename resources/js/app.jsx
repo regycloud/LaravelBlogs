@@ -11,7 +11,7 @@ axios.defaults.headers.common["X-CSRF-TOKEN"] = document
 
 createInertiaApp({
     resolve: (name) => {
-        return import(`./Pages/${name}`).then((module) => {
+        return import(/* @vite-ignore */ `./Pages/${name}`).then((module) => {
             const page = module.default;
             // Hanya gunakan layout jika `page.withoutLayout` tidak diatur atau false
             page.layout =

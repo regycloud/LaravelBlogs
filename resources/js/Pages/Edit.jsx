@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Inertia } from '@inertiajs/inertia';
-import { usePage, InertiaLink } from '@inertiajs/inertia-react';
+import { usePage, InertiaLink, Head } from '@inertiajs/inertia-react';
 
 const Edit = () => {
     const { blog } = usePage().props; // Take blog data from server-side
@@ -18,6 +18,8 @@ const Edit = () => {
     };
 
     return (
+        <>
+        <Head><title>編集　ー　{blog.title}</title></Head>
         <div className="max-w-4xl mx-auto py-8 px-4 bg-white shadow-md rounded-lg">
         <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">編集</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -59,6 +61,7 @@ const Edit = () => {
             </InertiaLink>
         </div>
     </div>
+        </>
     );
 };
 

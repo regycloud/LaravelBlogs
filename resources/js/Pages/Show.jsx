@@ -1,5 +1,5 @@
 import React from "react";
-import { usePage } from "@inertiajs/inertia-react";
+import { Head, usePage } from "@inertiajs/inertia-react";
 import BackButton from "@/Components/BackButton";
 
 const Show = () => {
@@ -19,6 +19,8 @@ const Show = () => {
     };
 
     return (
+        <>
+        <Head><title>{blog.title}</title></Head>
         <div className="flex flex-col items-center justify-center text-gray-800">
             <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-lg">
                 <h1 className="text-2xl font-bold text-gray-900 mb-4">
@@ -40,6 +42,7 @@ const Show = () => {
                 <BackButton />
             </div>
         </div>
+        </>
     );
 };
 

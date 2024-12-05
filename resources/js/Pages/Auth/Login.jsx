@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Inertia } from "@inertiajs/inertia";
-import BackButton from "@/Components/BackButton";
+import { Head } from "@inertiajs/inertia-react";
+
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -24,6 +25,10 @@ const Login = () => {
     };
 
     return (
+        <>
+        <Head>
+            <title>ログイン</title>
+        </Head>
         <div className="flex h-[75vh] justify-center items-center bg-gray-50">
             <form
                 onSubmit={handleSubmit}
@@ -80,6 +85,7 @@ const Login = () => {
                 </div>
             </form>
         </div>
+        </>
     );
 };
 
