@@ -8,63 +8,31 @@ use App\Http\Middleware\HandleInertiaRequests;
 use Illuminate\Support\Facades\Auth;
 use App\Actions\Fortify\CreateNewUser;
 use App\Http\Controllers\RegisteredUserController;
+use App\Http\Controllers\AuthController;
 
-Route::post('/register', function (Request $request) {
-    $action = new CreateNewUser();
-    $user = $action->create($request->all());
-    return response()->json(['message' => 'Registration successful!', 'user' => $user]);
-});
-
-Route::middleware('web')->group(function () {
-    Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
-});
-
-
+// Register and logout
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
-
-Route::get('/register', function () {
-    return Inertia::render('Register'); 
-});
-
-// Logout request
-Route::post('/logout', function () {
-    Auth::logout();
-    return redirect('/login'); // Redirect ke halaman login setelah logout
-})->name('logout');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Need to logged in before accessing these pages
 Route::middleware([HandleInertiaRequests::class, 'auth'])->group(function () {    
     // Create a new blog
-    Route::get('/blogs/create', function () {
-        return Inertia::render('Create'); 
-    })->name('blogs.create');
+    Route::get('/blogs/create', [BlogController::class, 'create'])->name('blogs.create');
     Route::post('/blogs', [BlogController::class, 'store'])->name('blogs.store');
     
     // Delete a blog
     Route::delete('/blogs/{blog}', [BlogController::class, 'destroy'])->name('blogs.destroy');
 
     // Edit a blog
-    Route::get('/blogs/{blog}/edit', function (App\Models\Blog $blog) {
-    return Inertia::render('Edit', [
-        'blog' => $blog, // Kirim data blog ke React
-    ]);})->name('blogs.edit');
+    Route::get('/blogs/{blog}/edit', [BlogController::class, 'edit'])->name('blogs.edit');
     Route::put('/blogs/{blog}', [BlogController::class, 'update'])->name('blogs.update');
-
-    // debug
-    Route::get('/blogs/create-debug', function () {
-    return "Route /blogs/create-debug berhasil diakses!";});
 });
 
-// Menampilkan detail blog berdasarkan ID
-Route::get('/blogs/{blog}', function (App\Models\Blog $blog) {
-    return Inertia::render('Show', [
-        'blog' => $blog, // Kirim data blog ke React
-    ]);
-})->name('blogs.show');
+// Show blog in detail by ID
+Route::get('/blogs/{blog}', [BlogController::class, 'show'])->name('blogs.show');
 
-// Halaman daftar blog
+// Show blogs index
 Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index'); 
-
 Route::get('/', function () {
     return Inertia::render('Home', [
         'user' => auth()->user(),

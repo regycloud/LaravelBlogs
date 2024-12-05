@@ -16,8 +16,8 @@ class BlogController extends Controller
     
     public function index()
     {
-        // Ambil data blog
-        $blogs = Blog::all();
+        // Ambil data blog dengan relasi user
+        $blogs = Blog::with('user')->get();
 
         // Kirim data ke komponen React Index.jsx
         return Inertia::render('Index', [
@@ -25,8 +25,7 @@ class BlogController extends Controller
             'auth' => [
                 'user' => auth()->user(),
             ],
-        ]);
-    }
+        ]);}
 
     public function create()
     {
@@ -51,17 +50,23 @@ class BlogController extends Controller
 
     public function show(Blog $blog)
     {
-        return view('blogs.show', compact('blog'));
+        $blog->load('user');
+        // dd($blog);
+        return Inertia::render('Show', [
+            'blog' => $blog
+
+        ]);
     }
 
     public function edit(Blog $blog)
     {
-        // Periksa apakah user login adalah pemilik post
+        // Check the owner of the post
         if (Auth::id() !== $blog->user_id) {
             abort(403, 'Unauthorized action.');
         }
-
-        return view('blogs.edit', compact('blog'));
+        return Inertia::render('Edit', [
+            'blog' => $blog,
+        ]);
     }
 
     public function update(Request $request, Blog $blog)
@@ -88,4 +93,11 @@ class BlogController extends Controller
     
         return response()->json(['message' => 'Post berhasil dihapus.'], 200);
     }
+
+    public function register()
+    {
+        return Inertia::render('Register');
+    }
+
+    
 }
