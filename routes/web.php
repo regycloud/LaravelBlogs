@@ -24,7 +24,7 @@ Route::middleware([HandleInertiaRequests::class, 'auth'])->group(function () {
     // Delete a blog
     Route::delete('/blogs/{blog}', [BlogController::class, 'destroy'])->name('blogs.destroy');
 
-    // Edit a blow
+    // Edit a blog
     Route::get('/blogs/{blog}/edit', function (App\Models\Blog $blog) {
     return Inertia::render('Edit', [
         'blog' => $blog, // Kirim data blog ke React
@@ -45,7 +45,6 @@ Route::get('/blogs/{blog}', function (App\Models\Blog $blog) {
 
 // Halaman daftar blog
 Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index'); 
-
 
 Route::get('/', function () {
     return Inertia::render('Home', [
