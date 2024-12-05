@@ -32,7 +32,7 @@ const Index = ({ blogs, auth }) => {
             });
 
             if (response.ok) {
-                window.location.href = '/login'; // Redirect ke halaman login setelah logout
+                window.location.href = '/'; // Redirect ke halaman login setelah logout
             } else {
                 console.error('Logout failed');
             }
@@ -74,12 +74,8 @@ const Index = ({ blogs, auth }) => {
                                         onClick={() => handleDelete(blog.id)}
                                         style={{ color: 'red', border: 'none', background: 'none', cursor: 'pointer' }}
                                     >
-                                        Hapus
+                                        消す
                                     </button>
-                                        <input type="hidden" name="_method" value="DELETE" />
-                                        <button type="submit" style={{ color: 'red', border: 'none', background: 'none', cursor: 'pointer' }}>
-                                            消す
-                                        </button>
                                     </form>
                                 </>
                             )}

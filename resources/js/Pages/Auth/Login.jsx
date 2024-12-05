@@ -9,11 +9,15 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         Inertia.post('/login', { email, password }, {
+            onSuccess: () => {
+                Inertia.visit('/');
+            },
             onError: (error) => {
                 setErrors(error);
             },
         });
     };
+
 
     return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
