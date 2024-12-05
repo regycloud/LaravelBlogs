@@ -57,6 +57,11 @@ const Index = ({ blogs, auth }) => {
                                     key={blog.id}
                                     href={`/blogs/${blog.id}`}
                                     className="block p-4 border border-gray-200 rounded-md shadow-sm hover:shadow-md transition-shadow"
+                                    onClick={(e) => {
+                                        if (e.target.tagName === "BUTTON" || e.target.tagName === "A") {
+                                            e.preventDefault();
+                                        }
+                                    }}
                                 >
                                     <li className="flex justify-between items-center">
                                         <span className="text-lg font-semibold text-blue-600 hover:underline">
@@ -75,8 +80,9 @@ const Index = ({ blogs, auth }) => {
                                                 </a>
                                                 <button
                                                     onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        handleDelete(blog.id);
+                                                        e.stopPropagation(); 
+                                                        e.preventDefault();
+                                                        handleDelete(blog.id); 
                                                     }}
                                                     className="text-sm text-white bg-red-500 hover:bg-red-600 font-semibold py-1 px-3 rounded shadow-md transition-all duration-200"
                                                 >

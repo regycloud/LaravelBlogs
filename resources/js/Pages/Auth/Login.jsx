@@ -29,7 +29,7 @@ const Login = () => {
         <Head>
             <title>ログイン</title>
         </Head>
-        <div className="flex h-[75vh] justify-center items-center bg-gray-50">
+        <div className="flex h-[75vh] justify-center items-center">
             <form
                 onSubmit={handleSubmit}
                 className="w-80 bg-white p-6 rounded-lg shadow-lg"
