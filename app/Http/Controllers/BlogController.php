@@ -91,7 +91,7 @@ class BlogController extends Controller
     
         $blog->delete();
     
-        return response()->json(['message' => 'Post berhasil dihapus.'], 200);
+        return redirect()->route('blogs.index')->with('message', 'Post berhasil dihapus.');
     }
 
     public function register()

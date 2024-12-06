@@ -54,9 +54,7 @@ const RegisterPage = () => {
 
     return (
         <>
-            <Head>
-                <title>登録</title>
-            </Head>
+        <Head><title></title></Head>
             <div className="max-w-md mx-auto my-12 p-5 border border-gray-300 rounded-lg shadow-lg">
                 <h1 className="text-2xl font-bold text-center mb-4">登録</h1>
                 {isModalVisible && (

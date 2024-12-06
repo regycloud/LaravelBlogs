@@ -1,24 +1,19 @@
 import React from "react";
-import axios from "axios";
+import { Inertia } from "@inertiajs/inertia";
 import BackButton from "@/Components/BackButton";
 import { Head } from "@inertiajs/inertia-react";
 
-const handleDelete = async (id) => {
+const handleDelete = (id) => {
     if (confirm("ブログを削除してもよろしいですか？")) {
-        try {
-            await axios.delete(`/blogs/${id}`, {
-                headers: {
-                    "X-CSRF-TOKEN": document
-                        .querySelector('meta[name="csrf-token"]')
-                        .getAttribute("content"),
-                },
-            });
-            alert("ブログを削除しました。");
-            window.location.reload();
-        } catch (error) {
-            console.error("Error:", error);
-            alert("削除失敗しました。");
-        }
+        Inertia.delete(`/blogs/${id}`, {
+            onSuccess: () => {
+                alert("ブログを削除しました。");
+            },
+            onError: (error) => {
+                console.error("Error:", error);
+                alert("削除失敗しました。");
+            },
+        });
     }
 };
 
